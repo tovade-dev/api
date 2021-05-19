@@ -1,0 +1,12 @@
+{
+  "name": "tovade-api",
+  "version": "1.0.0",
+  "description": "Work in progress please wait.",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && npm install && node ./dist/src/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}
