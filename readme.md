@@ -8,5 +8,7 @@
    Not working? Join my [discord](https://discord.gg/HBZcEhxHSj)!
 
 ## Public api
+https://api.tovade.ml/
 
-As of right now the public api isn't available yet but i'll announce it in my [Discord](https://discord.gg/HBZcEhxHSj)!
+
+[Join My Discord](https://discord.gg/HBZcEhxHSj)!
