@@ -1,7 +1,7 @@
 [
     "/v1/canvas/blur",
     "/v1/canvas/circle",
-    "/v1/canvas/disturb",
+    "/v1/canvas/magik",
     "/v1/canvas/brighten",
     "/v1/canvas/greyscale"
 ]

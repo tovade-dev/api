@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { loadImage, createCanvas } = require("canvas");
 const jimp = require('jimp')
 const route = Router();
-route.get("/disturb", async (req, res) => {
+route.get("/magik", async (req, res) => {
   let int = req.query.intensity;
   if (!req.query.image)
     return res.json({ error: true, message: "No image url.", status: 400 });
@@ -18,10 +18,10 @@ route.get("/disturb", async (req, res) => {
   for (let i = 0; i < data.width; i++) {
     for (let j = 0; j < data.height; j++) {
       const xs = Math.round(
-        int * Math.sin(2 * Math.PI * 3 * (j / data.height))
+        parseInt(int) * Math.sin(2 * Math.PI * 3 * (j / data.height))
       );
-      const ys = Math.round(int * Math.cos(2 * Math.PI * 3 * (i / data.width)));
-      const dest = j * stride + i * int;
+      const ys = Math.round(parseInt(int) * Math.cos(2 * Math.PI * 3 * (i / data.width)));
+      const dest = j * stride + i * 4;
       const src = (j + ys) * stride + (i + xs) * 4;
       ddata.data[dest] = temp.data[src];
       ddata.data[dest + 1] = temp.data[src + 1];
