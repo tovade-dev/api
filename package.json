@@ -2,20 +2,22 @@
   "name": "tovade-api",
   "version": "1.0.0",
   "description": "Work in progress please wait.",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "tsc && npm install && node ./dist/src/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts"
+    "start": "npm install && node ./src/index.js",
+    "dev": "nodemon ./src/index.js"
   },
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
+    "canvas": "^2.8.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "glob": "^7.1.7",
-    "path": "^0.12.7",
-    "swagger-jsdoc": "^6.0.0",
-    "swagger-ui-express": "^4.1.6"
+    "jimp": "^0.16.1",
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
