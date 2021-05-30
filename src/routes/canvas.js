@@ -114,7 +114,7 @@ route.get("/blur", async (req, res) => {
 		});
 	}
 
-	img.blur(intensity)
+	img.blur(parseInt(intensity))
 	res.set({ 'Content-Type': 'image/png' });
 	res.status(200).send(await img.getBufferAsync('image/png'));
 })
