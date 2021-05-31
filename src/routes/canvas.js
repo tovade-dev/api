@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { loadImage, createCanvas } = require("canvas");
-const jimp = require('jimp')
+const jimp = require("jimp");
 const route = Router();
 route.get("/magik", async (req, res) => {
   let int = req.query.intensity;
@@ -20,7 +20,9 @@ route.get("/magik", async (req, res) => {
       const xs = Math.round(
         parseInt(int) * Math.sin(2 * Math.PI * 3 * (j / data.height))
       );
-      const ys = Math.round(parseInt(int) * Math.cos(2 * Math.PI * 3 * (i / data.width)));
+      const ys = Math.round(
+        parseInt(int) * Math.cos(2 * Math.PI * 3 * (i / data.width))
+      );
       const dest = j * stride + i * 4;
       const src = (j + ys) * stride + (i + xs) * 4;
       ddata.data[dest] = temp.data[src];
@@ -33,91 +35,91 @@ route.get("/magik", async (req, res) => {
   return res.send(canvas.toBuffer());
 });
 route.get("/brigthen", async (req, res) => {
-  let imgUrl = req.query.image
-  if(!imgUrl) return res.json({
-    error: true,
-    message: "missing image query"
-  })
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
   let img;
-	try {
-		img = await jimp.read(imgUrl);
-	}
-	catch (err) {
-		return res.status(400).json({
-			error: true,
-			message: 'Failed to load this image'
-		});
-	}
+  try {
+    img = await jimp.read(imgUrl);
+  } catch (err) {
+    return res.status(400).json({
+      error: true,
+      message: "Failed to load this image",
+    });
+  }
 
-	img.brightness(0.5)
-	res.set({ 'Content-Type': 'image/png' });
-	res.status(200).send(await img.getBufferAsync('image/png'));
-})
+  img.brightness(0.5);
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(await img.getBufferAsync("image/png"));
+});
 route.get("/greyscale", async (req, res) => {
-  let imgUrl = req.query.image
-  if(!imgUrl) return res.json({
-    error: true,
-    message: "missing image query"
-  })
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
   let img;
-	try {
-		img = await jimp.read(imgUrl);
-	}
-	catch (err) {
-		return res.status(400).json({
-			error: true,
-			message: 'Failed to load this image'
-		});
-	}
+  try {
+    img = await jimp.read(imgUrl);
+  } catch (err) {
+    return res.status(400).json({
+      error: true,
+      message: "Failed to load this image",
+    });
+  }
 
-	img.greyscale()
-	res.set({ 'Content-Type': 'image/png' });
-	res.status(200).send(await img.getBufferAsync('image/png'));
-})
+  img.greyscale();
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(await img.getBufferAsync("image/png"));
+});
 route.get("/circle", async (req, res) => {
-  let imgUrl = req.query.image
-  if(!imgUrl) return res.json({
-    error: true,
-    message: "missing image query"
-  })
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
   let img;
-	try {
-		img = await jimp.read(imgUrl);
-	}
-	catch (err) {
-		return res.status(400).json({
-			error: true,
-			message: 'Failed to load this image'
-		});
-	}
+  try {
+    img = await jimp.read(imgUrl);
+  } catch (err) {
+    return res.status(400).json({
+      error: true,
+      message: "Failed to load this image",
+    });
+  }
 
-	img.circle()
-	res.set({ 'Content-Type': 'image/png' });
-	res.status(200).send(await img.getBufferAsync('image/png'));
-})
+  img.circle();
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(await img.getBufferAsync("image/png"));
+});
 route.get("/blur", async (req, res) => {
-  let imgUrl = req.query.image
-  if(!imgUrl) return res.json({
-    error: true,
-    message: "missing image query"
-  })
-  let intensity = req.query.intensity
-  if(!intensity) intensity = 10
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
+  let intensity = req.query.intensity;
+  if (!intensity) intensity = 10;
   let img;
-	try {
-		img = await jimp.read(imgUrl);
-	}
-	catch (err) {
-		return res.status(400).json({
-			error: true,
-			message: 'Failed to load this image'
-		});
-	}
+  try {
+    img = await jimp.read(imgUrl);
+  } catch (err) {
+    return res.status(400).json({
+      error: true,
+      message: "Failed to load this image",
+    });
+  }
 
-	img.blur(parseInt(intensity))
-	res.set({ 'Content-Type': 'image/png' });
-	res.status(200).send(await img.getBufferAsync('image/png'));
-})
+  img.blur(parseInt(intensity));
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(await img.getBufferAsync("image/png"));
+});
 
 module.exports = {
   endpoint: "/canvas",
