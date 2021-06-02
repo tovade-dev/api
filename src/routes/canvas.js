@@ -120,6 +120,29 @@ route.get("/blur", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
+route.get("/invert", (req, res) => {
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
+  let intensity = req.query.intensity;
+  if (!intensity) intensity = 10;
+  let img;
+  try {
+    img = await jimp.read(imgUrl);
+  } catch (err) {
+    return res.json({
+      error: true,
+      message: "Failed to load this image",
+    });
+  }
+
+  img.invert();
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(await img.getBufferAsync("image/png"));
+});
 
 module.exports = {
   endpoint: "/canvas",
