@@ -120,7 +120,7 @@ route.get("/blur", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
-route.get("/invert", (req, res) => {
+route.get("/invert", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
     return res.json({
