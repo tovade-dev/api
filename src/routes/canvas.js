@@ -127,8 +127,6 @@ route.get("/invert", async (req, res) => {
       error: true,
       message: "missing image query",
     });
-  let intensity = req.query.intensity;
-  if (!intensity) intensity = 10;
   let img;
   try {
     img = await jimp.read(imgUrl);
@@ -142,6 +140,22 @@ route.get("/invert", async (req, res) => {
   img.invert();
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
+});
+route.get("/gay", async (req, res) => {
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
+  let bg = await loadImage(`${__dirname}/../assets/gay.png`);
+  let img = await loadImage(imgUrl);
+  const canvas = createCanvas(480, 480);
+  const ctx = canvas.getContext(`2d`);
+  ctx.drawImage(img, 0, 0, 480, 480);
+  ctx.drawImage(bg, 0, 0, 480, 480);
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(canvas.toBuffer());
 });
 
 module.exports = {
