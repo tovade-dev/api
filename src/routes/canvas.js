@@ -92,7 +92,7 @@ route.get("/circle", async (req, res) => {
       message: "Failed to load this image",
     });
   }
-
+  img.resize(480, 480);
   img.circle();
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
