@@ -157,6 +157,22 @@ route.get("/gay", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(canvas.toBuffer());
 });
+route.get("/ad", async (req, res) => {
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
+  let bg = await loadImage(`${__dirname}/../assets/ad.png`);
+  let img = await loadImage(imgUrl);
+  const canvas = createCanvas(550, 474);
+  const ctx = canvas.getContext(`2d`);
+  ctx.drawImage(img, 150, 75, 230, 230);
+  ctx.drawImage(bg, 0, 0, 550, 474);
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(canvas.toBuffer());
+});
 
 module.exports = {
   endpoint: "/canvas",
