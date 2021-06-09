@@ -29,12 +29,14 @@ async function fetchSub(sub) {
   if (dataRes.statusCode === 404) return "Invalid subreddit?";
   const post = dataRes.data.children[0];
   const p = post.data;
+  if (!p) return { error: true, message: "Subreddit does not exist." };
   return {
     title: p.title || "",
     url: p.url || "",
     thumbnail: p.thumbnail,
     published: moment.utc(p.created_utc).format("YYYY/MM/DD hh:mm:ss"),
     permalink: `https://reddit.com${p.permalink}`,
+    nsfw: p.over_18,
     author: {
       name: p.author || "Deleted",
     },
