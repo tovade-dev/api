@@ -31,7 +31,9 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-app.use("/", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use("/", (req, res) => {
+  res.redirect("/docs");
+});
 
 loadFiles();
 app.listen(config.port, function () {
