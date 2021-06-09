@@ -26,7 +26,7 @@ const swaggerOptions = {
     servers: config.servers,
   },
   explorer: true,
-  apis: [__dirname + "/Routes/*.js"],
+  apis: [__dirname + "/routes/*.js"],
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
