@@ -4,14 +4,11 @@ const path = require("path");
 const app = express();
 const cors = require("cors");
 const bodyparser = require("body-parser");
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUI = require('swagger-ui-express');
-
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
+const config = require("../config");
 app.use(bodyparser.json());
 app.use(cors());
-const mainRoute = require("./imp/slash");
-
-app.use("/", mainRoute.router);
 const loadFiles = async () => {
   let files = glob.sync("./src/routes/*.js");
   files.forEach((route) => {
@@ -21,21 +18,22 @@ const loadFiles = async () => {
 };
 
 const swaggerOptions = {
-	swaggerDefinition: {
-		info: {
-			title: 'API',
-			description: 'API'
-		},
-		servers: ['http://localhost:20238']
-	},
-	explorer: true,
-	apis: [__dirname + '/Routes/*.js']
+  swaggerDefinition: {
+    info: {
+      title: "Tovade's api",
+      description: "An api made by tovade.",
+    },
+    servers: config.servers,
+  },
+  explorer: true,
+  apis: [__dirname + "/Routes/*.js"],
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use("/", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 loadFiles();
-app.listen(20238, function () {
-  console.log("Running on port: 20238");
+app.listen(config.port, function () {
+  console.log(`Running on port: ${config.port}`);
 });
