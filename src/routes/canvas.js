@@ -2,6 +2,26 @@ const { Router } = require("express");
 const { loadImage, createCanvas } = require("canvas");
 const jimp = require("jimp");
 const route = Router();
+
+
+/**
+ * @swagger
+ * /v1/canvas/magik:
+ *   get:
+ *     description: Create funny image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get("/magik", async (req, res) => {
   let int = req.query.intensity;
   if (!req.query.image)
@@ -34,7 +54,28 @@ route.get("/magik", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   return res.send(canvas.toBuffer());
 });
-route.get("/brigthen", async (req, res) => {
+
+
+
+/**
+ * @swagger
+ * /v1/canvas/brighten:
+ *   get:
+ *     description: brighten up an image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/brighten", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
     return res.json({
@@ -55,6 +96,26 @@ route.get("/brigthen", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
+
+
+/**
+ * @swagger
+ * /v1/canvas/greyscale:
+ *   get:
+ *     description: greyscale an image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get("/greyscale", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
@@ -76,6 +137,26 @@ route.get("/greyscale", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
+
+
+/**
+ * @swagger
+ * /v1/canvas/circle:
+ *   get:
+ *     description: circle an image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get("/circle", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
@@ -97,6 +178,27 @@ route.get("/circle", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
+
+
+
+/**
+ * @swagger
+ * /v1/canvas/blur:
+ *   get:
+ *     description: blur an image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get("/blur", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
@@ -120,6 +222,27 @@ route.get("/blur", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
+
+
+
+/**
+ * @swagger
+ * /v1/canvas/invert:
+ *   get:
+ *     description: invert an image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get("/invert", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
@@ -141,6 +264,27 @@ route.get("/invert", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
+
+
+
+/**
+ * @swagger
+ * /v1/canvas/gay:
+ *   get:
+ *     description: gay an image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get("/gay", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
@@ -157,6 +301,27 @@ route.get("/gay", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(canvas.toBuffer());
 });
+
+
+
+/**
+ * @swagger
+ * /v1/canvas/ad:
+ *   get:
+ *     description: ad an image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get("/ad", async (req, res) => {
   let imgUrl = req.query.image;
   if (!imgUrl)
