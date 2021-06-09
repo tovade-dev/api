@@ -21,7 +21,9 @@
     "jimp": "^0.16.1",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",

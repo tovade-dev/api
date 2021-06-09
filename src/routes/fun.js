@@ -4,7 +4,18 @@ const fetch = require('node-fetch')
 const route = Router()
 
 
-//thanks to Xaliks
+/**
+ * @swagger
+ * /v1/fun/wyr:
+ *   get:
+ *     description: Don't know
+ *     tags: [fun]
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 route.get('/wyr', async (req, res) => {
     const data = await fetch("http://either.io").then((resp) => resp.text());
     const $ = cheerio.load(data);
