@@ -7,5 +7,8 @@
   "/v1/info/covid",
   "/v1/fun/wyr",
   "/v1/canvas/invert",
-  "/v1/canvas/gay"
+  "/v1/canvas/gay",
+  "v1/canvas/ad",
+  "/v1/info/npm",
+  "/v1/info/reddit"
 ]
