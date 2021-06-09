@@ -28,7 +28,7 @@ async function fetchSub(sub) {
   ).then((rese) => rese.json());
   if (dataRes.statusCode === 404) return "Invalid subreddit?";
   const post = dataRes.data.children[0];
-  const p = post.data;
+  const p = post?.data;
   if (!p) return { error: true, message: "Subreddit does not exist." };
   return {
     title: p.title || "",
