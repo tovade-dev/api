@@ -2,7 +2,7 @@ const { Router } = require("express");
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");
 const route = Router();
-
+const jokes = require("../assets/json/jokes.json");
 /**
  * @swagger
  * /v1/fun/wyr:
@@ -52,6 +52,27 @@ route.get("/wyr", async (req, res) => {
       2: votes[1],
     },
     author: author,
+  });
+});
+/**
+ * @swagger
+ * /v1/fun/joke:
+ *   get:
+ *     description: Just getting an joke.
+ *     tags: [fun]
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/joke", (req, res) => {
+  const joke = jokes[Math.floor(Math.random() * jokes.length)];
+
+  return res.json({
+    question: joke.title,
+    answer: joke.body,
+    score: joke.score,
   });
 });
 
