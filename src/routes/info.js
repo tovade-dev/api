@@ -2,7 +2,6 @@ const { Router } = require("express");
 const route = Router();
 const fetch = require("node-fetch");
 
-
 /**
  * @swagger
  * /v1/info/covid:
@@ -56,7 +55,7 @@ route.get("/npm", async (req, res) => {
  * @swagger
  * /v1/info/reddit:
  *   get:
- *     description: fetch NPM data
+ *     description: fetch the latest post of a subreddit
  *     tags: [info]
  *     parameters:
  *       - name: sub

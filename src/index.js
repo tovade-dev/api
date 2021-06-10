@@ -16,7 +16,7 @@ const loadFiles = async () => {
     app.use(`/v1${file.endpoint}`, file.router);
   });
 };
-
+app.use(express.static("public"));
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
