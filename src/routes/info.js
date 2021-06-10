@@ -40,7 +40,8 @@ route.get("/covid", async (req, res) => {
  *       400:
  *         description: Error
  */
-const { fetchPkg, fetchSub } = require("../utils/functions");
+
+const { fetchPkg, fetchSub, fetchLyrics } = require("../utils/functions");
 route.get("/npm", async (req, res) => {
   if (!req.query.package)
     return res.json({
@@ -49,6 +50,33 @@ route.get("/npm", async (req, res) => {
     });
   const data = await fetchPkg(req.query.package);
   return res.json(data);
+});
+/**
+ * @swagger
+ * /v1/info/lyrics:
+ *   get:
+ *     description: fetch song data
+ *     tags: [info]
+ *     parameters:
+ *       - name: song
+ *         description: The song name.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/lyrics", async (req, res) => {
+  if (!req.query.song)
+    return res.json({
+      error: true,
+      message: "No song was provided in the query",
+    });
+  const data = await fetchLyrics(req.query.song);
+  res.send(data);
 });
 
 /**

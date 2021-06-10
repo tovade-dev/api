@@ -52,7 +52,24 @@ async function fetchSub(sub) {
     },
   };
 }
+const genius = require("@tovade/genius-lyrics");
+const config = require("../../config");
+
+async function fetchLyrics(song) {
+  const g = new genius.Client(config.genius);
+  const searches = await g.songs.search(song);
+  const firstSong = searches[0];
+  const lyrics = await firstSong.lyrics();
+
+  return {
+    thumbnail: firstSong.raw.song_art_image_thumbnail_url,
+    title: firstSong.raw.title,
+    author: firstSong.raw.primary_artist.name,
+    lyrics: lyrics || "No Lyrics found.",
+  };
+}
 module.exports = {
   fetchPkg,
   fetchSub,
+  fetchLyrics,
 };
