@@ -8,7 +8,12 @@
    Not working? Join my [discord](https://discord.gg/HBZcEhxHSj)!
 
 ## Public api
+
 https://api.tovade.xyz/
 
+## credits
+
+MonkeDev: rate-limit base
+SpiderJocker02: Docs & ideas
 
 [Join My Discord](https://discord.gg/HBZcEhxHSj)!

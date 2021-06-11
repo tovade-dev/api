@@ -16,7 +16,7 @@ const loadFiles = async () => {
     app.use(`/v1${file.endpoint}`, file.router);
   });
 };
-app.use(express.static("public"));
+app.use(require("./utils/ratelimiter"));
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
@@ -31,10 +31,19 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use(express.static("public"));
 app.get("/", (req, res) => {
   res.redirect("/docs");
 });
-
+app.get("/discord", (req, res) => {
+  res.redirect(config.discord);
+});
+app.get("/favicon.ico", (req, res) => {
+  res.sendFile(path.join(__dirname + "/assets", "tovade-mustang.png"));
+});
+require("./utils/mongoDB");
+const userManager = require("./utils/userManager");
+process.s = new userManager();
 loadFiles();
 app.listen(config.port, function () {
   console.log(`Running on port: ${config.port}`);
