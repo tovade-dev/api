@@ -57,6 +57,6 @@ router.get("/user/info", async (req, res) => {
 });
 
 module.exports = {
-  endpoint: "/admin/",
+  endpoint: "/admin",
   router,
 };
