@@ -23,7 +23,7 @@ client.on("message", async (message) => {
 
   if (!message.content.startsWith(prefix)) return;
 
-  const args = message.content.split(prefix.length).trim().split(/ +/g);
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const cmd = args.shift();
   const command = client.commands.get(cmd);
   if (!command) return;
