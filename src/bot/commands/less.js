@@ -14,7 +14,10 @@ module.exports = {
 
     const res = await (
       await fetch(
-        "https://api.tovade.xyz/add?userID=" + user.id + "&amount=" + amount,
+        "https://api.tovade.xyz/v1/admin/add?userID=" +
+          user.id +
+          "&amount=" +
+          amount,
         {
           method: "POST",
           headers: { auth: client.config.adminkey },

@@ -5,7 +5,7 @@ module.exports = {
   async execute(client, message, args) {
     const res = await (
       await fetch(
-        "https://api.tovade.xyz/admin/user/info?userID=" + message.author.id,
+        "https://api.tovade.xyz/v1/admin/user/info?userID=" + message.author.id,
         {
           method: "GET",
           headers: { auth: client.config.adminkey },
