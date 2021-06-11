@@ -48,3 +48,4 @@ loadFiles();
 app.listen(config.port, function () {
   console.log(`Running on port: ${config.port}`);
 });
+require("./bot/index");
