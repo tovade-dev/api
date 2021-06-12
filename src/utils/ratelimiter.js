@@ -13,9 +13,7 @@ module.exports = async (req, res, next) => {
     req.originalUrl == "/favicon.ico"
   )
     return next();
-
-  const key = req.headers.Authorization;
-
+  const key = req.headers.authorization;
   if (key) {
     const keyData = await s.getKey(key.replace("Bearer", "").trim());
     if (!keyData)

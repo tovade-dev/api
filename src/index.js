@@ -7,8 +7,14 @@ const bodyparser = require("body-parser");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
 const config = require("../config");
+const limit = require("./utils/ratelimiter");
 app.use(bodyparser.json());
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ["Authorisation"],
+  })
+);
+app.use(limit);
 const loadFiles = async () => {
   let files = glob.sync("./src/routes/*.js");
   files.forEach((route) => {
@@ -16,7 +22,6 @@ const loadFiles = async () => {
     app.use(`/v1${file.endpoint}`, file.router);
   });
 };
-app.use(require("./utils/ratelimiter"));
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
