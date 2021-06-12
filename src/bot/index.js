@@ -1,4 +1,4 @@
-const { Client } = require("discord.js");
+const { Client, MessageEmbed } = require("discord.js");
 
 const client = new Client();
 const config = require("../../config");
@@ -37,5 +37,34 @@ client.on("message", async (message) => {
     console.log(err);
     message.reply("An error has occured.");
   }
+});
+const m = require("../models/user");
+client.on("guildMemberRemove", async (member) => {
+  await m.deleteOne({
+    id: member.id,
+  });
+
+  const channel = client.channels.cache.get("800831211010129929");
+
+  const embed = new MessageEmbed()
+    .setTitle("Bye!!")
+    .setDescription(`${member.user.username} has left the server.`)
+    .setThumbnail(
+      member.user.displayAvatarURL({ format: "png", dynamic: true })
+    )
+    .setTimestamp();
+  channel.send(embed);
+});
+client.on("guildMemberAdd", (member) => {
+  const channel = client.channels.cache.get("800831211010129929");
+
+  const embed = new MessageEmbed()
+    .setTitle("Bye!!")
+    .setDescription(`${member.user.username} has joined the server.`)
+    .setThumbnail(
+      member.user.displayAvatarURL({ format: "png", dynamic: true })
+    )
+    .setTimestamp();
+  channel.send(embed);
 });
 client.login(config.discord_token);
