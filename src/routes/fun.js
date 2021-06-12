@@ -38,7 +38,7 @@ route.get("/wyr", async (req, res) => {
     ),
   ];
   const total_votes = Number(
-    $('span[class="contents"]').text().split(" votes")[0].replace(/, +/g, "")
+    $('span[class="contents"]').text().split(" votes")[0].replace(/,+/g, "")
   );
   const percentage = [
     ((votes[0] / total_votes) * 100).toFixed(2),
