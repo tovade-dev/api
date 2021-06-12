@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
   )
     return next();
 
-  const key = req.headers.authorization;
+  const key = req.headers.Authorization;
 
   if (key) {
     const keyData = await s.getKey(key.replace("Bearer", "").trim());
