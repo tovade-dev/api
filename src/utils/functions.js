@@ -68,8 +68,19 @@ async function fetchLyrics(song) {
     lyrics: lyrics || "No Lyrics found.",
   };
 }
+async function fetchAnimal(type) {
+  const data = await fetch(`https://some-random-api.ml/animal/${type}`).then(
+    (d) => d.json()
+  );
+
+  return {
+    fact: data.fact,
+    image: data.image,
+  };
+}
 module.exports = {
   fetchPkg,
   fetchSub,
   fetchLyrics,
+  fetchAnimal,
 };
