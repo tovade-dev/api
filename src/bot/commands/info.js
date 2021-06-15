@@ -4,7 +4,7 @@ module.exports = {
   description: "Info",
   async execute(client, message, args) {
     const res = await fetch(
-      "http://localhost:20357/v1/admin/user/info?userID=" + message.author.id,
+      "http://api.tovade.xyz/v1/admin/user/info?userID=" + message.author.id,
       {
         method: "GET",
         headers: {
