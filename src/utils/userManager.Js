@@ -10,7 +10,7 @@ module.exports = class {
     this.updateCache();
     setInterval(() => {
       this.updateCache();
-    }, 10 * 60 * 1000);
+    }, 2000);
   }
 
   updateCache() {

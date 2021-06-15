@@ -1,5 +1,6 @@
 const { request, response } = require("express");
 const nokeyuser = new Map();
+const modle = require("../models/user");
 /**
  * @param {request} req
  * @param {response} res
@@ -15,7 +16,9 @@ module.exports = async (req, res, next) => {
     return next();
   const key = req.headers.authorization;
   if (key) {
-    const keyData = await s.getKey(key.replace("Bearer", "").trim());
+    const keyData = await modle.findOne({
+      key: key.replace("Bearer", "").trim(),
+    });
     if (!keyData)
       return res.json({ error: true, message: "An invalid key was givin." });
     keyData.stats.total++;
@@ -26,10 +29,19 @@ module.exports = async (req, res, next) => {
         message: `You have been ratelimited (${keyData.ratelimit.max}/m), If you want this number higher join our discord server and ask! (https://api.tovade.xyz/discord)`,
       });
     } else {
-      let amount = 1;
-      keyData.ratelimit.used += amount;
-      setTimeout(() => {
-        keyData.ratelimit.used -= amount;
+      await keyData.updateOne({
+        ratelimit: {
+          max: keyData.ratelimit.max,
+          used: keyData.ratelimit.used + 1,
+        },
+      });
+      setTimeout(async () => {
+        await keyData.updateOne({
+          ratelimit: {
+            max: keyData.ratelimit.max,
+            used: 0,
+          },
+        });
       }, 60 * 1000);
     }
 

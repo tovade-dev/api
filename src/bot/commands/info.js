@@ -4,7 +4,7 @@ module.exports = {
   description: "Info",
   async execute(client, message, args) {
     const res = await fetch(
-      "https://api.tovade.xyz/v1/admin/user/info?userID=" + message.author.id,
+      "http://localhost:20357/v1/admin/user/info?userID=" + message.author.id,
       {
         method: "GET",
         headers: {
@@ -22,7 +22,6 @@ module.exports = {
         color: 0xffa500,
       },
     };
-
     toSend.embed.fields.push({
       name: "Request",
       value: `Total: ${res.stats.total}`,

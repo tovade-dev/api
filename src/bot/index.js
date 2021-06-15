@@ -5,6 +5,9 @@ const config = require("../../config");
 const glob = require("glob");
 const { Collection } = require("discord.js");
 const path = require("path");
+client.on("ready", () => {
+  client.user.setStatus("idle");
+});
 client.config = config;
 client.commands = new Collection();
 async function loadCmd() {
@@ -16,7 +19,7 @@ async function loadCmd() {
   }
 }
 loadCmd();
-const prefix = "api!";
+const prefix = "ap!";
 client.on("message", async (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
@@ -47,7 +50,7 @@ client.on("guildMemberRemove", async (member) => {
   const channel = client.channels.cache.get("800831211010129929");
 
   const embed = new MessageEmbed()
-    .setTitle("Bye!!")
+    .setTitle("Bye!")
     .setDescription(`${member.user.username} has left the server.`)
     .setThumbnail(
       member.user.displayAvatarURL({ format: "png", dynamic: true })
@@ -56,10 +59,10 @@ client.on("guildMemberRemove", async (member) => {
   channel.send(embed);
 });
 client.on("guildMemberAdd", (member) => {
-  const channel = client.channels.cache.get("800831211010129929");
+  const channel = client.channels.cache.get("800831211010129927");
 
   const embed = new MessageEmbed()
-    .setTitle("Bye!!")
+    .setTitle("Welcome!")
     .setDescription(`${member.user.username} has joined the server.`)
     .setThumbnail(
       member.user.displayAvatarURL({ format: "png", dynamic: true })

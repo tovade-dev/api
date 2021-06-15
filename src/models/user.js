@@ -1,12 +1,11 @@
-const { model, Schema } = require("mongoose");
-
-module.exports = model(
+const mongo = require("mongoose");
+module.exports = mongo.model(
   "users",
-  new Schema({
+  new mongo.Schema({
     id: { type: String },
     key: { type: String },
     ratelimit: {
-      max: { type: Number, default: 500 },
+      max: { type: Number, default: 300 },
       used: { type: Number, default: 0 },
     },
     stats: {
