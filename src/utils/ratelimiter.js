@@ -44,8 +44,6 @@ module.exports = async (req, res, next) => {
         });
       }, 60 * 1000);
     }
-
-    req.keyData = keyData;
   } else {
     let endData = await nokeyuser.get(
       req.headers["x-real-ip"] || req.connection.remoteAddress
@@ -72,8 +70,6 @@ module.exports = async (req, res, next) => {
         endData.used -= amount;
       }, 60 * 1000);
     }
-
-    req.endPoints = nokeyuser;
   }
 
   next();
