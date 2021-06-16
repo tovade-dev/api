@@ -7,6 +7,9 @@ const { Collection } = require("discord.js");
 const path = require("path");
 client.on("ready", () => {
   client.user.setStatus("idle");
+  client.user.setActivity("api!help | https://api.tovade.xyz", {
+    type: "WATCHING",
+  });
 });
 client.config = config;
 client.commands = new Collection();
@@ -19,7 +22,7 @@ async function loadCmd() {
   }
 }
 loadCmd();
-const prefix = "ap!";
+const prefix = "api!";
 client.on("message", async (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
@@ -47,7 +50,7 @@ client.on("guildMemberRemove", async (member) => {
     id: member.id,
   });
 
-  const channel = client.channels.cache.get("800831211010129929");
+  const channel = client.channels.cache.get("853257515138285650");
 
   const embed = new MessageEmbed()
     .setTitle("Bye!")
@@ -59,7 +62,7 @@ client.on("guildMemberRemove", async (member) => {
   channel.send(embed);
 });
 client.on("guildMemberAdd", (member) => {
-  const channel = client.channels.cache.get("800831211010129927");
+  const channel = client.channels.cache.get("853257515138285649");
 
   const embed = new MessageEmbed()
     .setTitle("Welcome!")
