@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 const route = Router();
 const jokes = require("../assets/json/jokes.json");
 const eightball = require("../assets/json/8ball.json");
+const quotes = require("../assets/json/quotes.json");
 /**
  * @swagger
  * /v1/fun/wyr:
@@ -75,9 +76,9 @@ route.get("/joke", (req, res) => {
   const joke = jokes[Math.floor(Math.random() * jokes.length)];
 
   return res.json({
-    question: joke.title,
-    answer: joke.body,
-    score: joke.score,
+    question: joke.setup,
+    answer: joke.punchline,
+    category: joke.type,
   });
 });
 /**
@@ -132,6 +133,62 @@ route.get("/8ball", (req, res) => {
   return res.json({
     answer: eightball[Math.floor(Math.random() * eightball.length)],
   });
+});
+/**
+ * @swagger
+ * /v1/fun/quote:
+ *   get:
+ *     description: Just getting an quote.
+ *     tags: [fun]
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/quote", (req, res) => {
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+  return res.json({
+    content: quote.content,
+    author: quote.author,
+    tags: quote.tags,
+    id: quote.authorId,
+    slug: quote.authorSlug,
+  });
+});
+/**
+ * @swagger
+ * /v1/fun/quote/author:
+ *   get:
+ *     description: Just getting an author from an quote.
+ *     tags: [fun]
+ *     parameters:
+ *       - name: id
+ *         description: The id from the author (need to use the id query or the slug query).
+ *         in: query
+ *         type: string
+ *       - name: slug
+ *         description: The slug from the author (need to use the id query or the slug query)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+const { getAuthorById, getAuthorBySlug } = require("../utils/quoteAuthors");
+route.get("/quote/author", (req, res) => {
+  if (req.query.id) return getAuthorById(req.query.id, res);
+  if (req.query.slug && !req.query.id)
+    return getAuthorBySlug(req.query.slug, res);
+  if (!req.query.slug && !req.query.id)
+    return res.json({
+      error: true,
+      message:
+        "Need to atleast provide one query parameter: author id or author slug",
+    });
 });
 module.exports = {
   endpoint: "/fun",
