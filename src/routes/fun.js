@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 const route = Router();
 const jokes = require("../assets/json/jokes.json");
 const eightball = require("../assets/json/8ball.json");
+const { facts } = require("../assets/js/facts");
 const quotes = require("../assets/json/quotes.json");
 /**
  * @swagger
@@ -133,6 +134,23 @@ route.get("/8ball", (req, res) => {
   return res.json({
     answer: eightball[Math.floor(Math.random() * eightball.length)],
   });
+});
+/**
+ * @swagger
+ * /v1/fun/fact:
+ *   get:
+ *     description: Just getting an fact.
+ *     tags: [fun]
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/fact", (req, res) => {
+  const fact = facts[Math.floor(Math.random() * facts.length)];
+
+  return res.json({ fact: fact });
 });
 /**
  * @swagger
