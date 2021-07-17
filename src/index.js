@@ -7,14 +7,12 @@ const bodyparser = require("body-parser");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
 const config = require("../config");
-const limit = require("./utils/ratelimiter");
 app.use(bodyparser.json());
 app.use(
   cors({
     exposedHeaders: ["Authorisation"],
   })
 );
-app.use(limit);
 const loadFiles = async () => {
   let files = glob.sync("./src/routes/*.js");
   files.forEach((route) => {
@@ -34,7 +32,14 @@ const swaggerOptions = {
   apis: [__dirname + "/routes/*.js"],
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
+const rateLimit = require("express-rate-limit");
+app.set("trust proxy", 1);
 
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, //10 minutes
+  max: 100,
+});
+app.use(limiter);
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.use(express.static("public"));
 app.get("/", (req, res) => {
@@ -47,10 +52,7 @@ app.get("/favicon.ico", (req, res) => {
   res.sendFile(path.join(__dirname + "/assets", "tovade-mustang.png"));
 });
 require("./utils/mongoDB");
-const userManager = require("./utils/userManager");
-process.s = new userManager();
 loadFiles();
 app.listen(config.port, function () {
   console.log(`Running on port: ${config.port}`);
 });
-require("./bot/index");
