@@ -40,10 +40,10 @@ const limiter = rateLimit({
   max: 100,
 });
 app.use(limiter);
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use("/", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.use(express.static("public"));
-app.get("/", (req, res) => {
-  res.redirect("/docs");
+app.get("/docs", (req, res) => {
+  res.redirect("/");
 });
 app.get("/discord", (req, res) => {
   res.redirect(config.discord);
