@@ -8,7 +8,7 @@
 
 <div align=center>
 
-[![Discord](https://img.shields.io/discord/853257514699194378.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/h7Y8YRMXu9)
+[![Discord](https://img.shields.io/discord/853257514699194378.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/y3eQ8wraD5)
 [![CodeFactor](https://www.codefactor.io/repository/github/tovade-dev/api/badge)](https://www.codefactor.io/repository/github/tovade-dev/api)
 ![Website](https://img.shields.io/website?down_color=red&down_message=offline&up_color=green&up_message=online&url=https%3A%2F%2Fapi.tovade.xyz%2Fdocs%2F)
 
