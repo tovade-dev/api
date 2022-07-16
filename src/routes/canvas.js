@@ -1,8 +1,7 @@
 const { Router } = require("express");
-const { loadImage, createCanvas } = require("canvas");
+const { loadImage, createCanvas, registerFont } = require("canvas");
 const jimp = require("jimp");
 const route = Router();
-
 
 /**
  * @swagger
@@ -55,8 +54,6 @@ route.get("/magik", async (req, res) => {
   return res.send(canvas.toBuffer());
 });
 
-
-
 /**
  * @swagger
  * /v1/canvas/brighten:
@@ -96,7 +93,6 @@ route.get("/brighten", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
-
 
 /**
  * @swagger
@@ -138,7 +134,6 @@ route.get("/greyscale", async (req, res) => {
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
 
-
 /**
  * @swagger
  * /v1/canvas/circle:
@@ -164,22 +159,17 @@ route.get("/circle", async (req, res) => {
       error: true,
       message: "missing image query",
     });
-  let img;
-  try {
-    img = await jimp.read(imgUrl);
-  } catch (err) {
-    return res.status(400).json({
-      error: true,
-      message: "Failed to load this image",
-    });
-  }
-  img.resize(480, 480);
-  img.circle();
+  const image = await jimp.read(imgUrl);
+  const mask = await jimp.read("./src/assets/circle-mask.png");
+  image.resize(512, 512);
+  image.mask(mask, 0, 0);
+  let raw;
+  image.getBuffer(`image/png`, (err, buffer) => {
+    raw = buffer;
+  });
   res.set({ "Content-Type": "image/png" });
-  res.status(200).send(await img.getBufferAsync("image/png"));
+  res.status(200).send(raw);
 });
-
-
 
 /**
  * @swagger
@@ -223,8 +213,6 @@ route.get("/blur", async (req, res) => {
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
 
-
-
 /**
  * @swagger
  * /v1/canvas/invert:
@@ -265,8 +253,6 @@ route.get("/invert", async (req, res) => {
   res.status(200).send(await img.getBufferAsync("image/png"));
 });
 
-
-
 /**
  * @swagger
  * /v1/canvas/gay:
@@ -302,8 +288,6 @@ route.get("/gay", async (req, res) => {
   res.status(200).send(canvas.toBuffer());
 });
 
-
-
 /**
  * @swagger
  * /v1/canvas/ad:
@@ -338,7 +322,128 @@ route.get("/ad", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   res.status(200).send(canvas.toBuffer());
 });
+/**
+ * @swagger
+ * /v1/canvas/feelings:
+ *   get:
+ *     description: feel
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: text
+ *         description: The text to place on the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/feelings", async (req, res) => {
+  let text = req.query.text;
+  if (!text)
+    return res.json({
+      error: true,
+      message: "missing text query",
+    });
+  let bg = await loadImage(`${__dirname}/../assets/img/feelings.png`);
 
+  const canvas = createCanvas(1080, 1204);
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(bg, 0, 0, 1080, 1204);
+  ctx.font = "28px Impact";
+  ctx.fillText(text, 150, 840);
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(canvas.toBuffer());
+});
+/**
+ * @swagger
+ * /v1/canvas/dym:
+ *   get:
+ *     description: did you mean
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: top
+ *         description: The top text to place on the google search
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/dym", async (req, res) => {
+  let top = req.query.top;
+  if (!top)
+    return res.json({
+      error: true,
+      message:
+        "missing text query, try reading the docs: https://api.tovade.xyz/docs",
+    });
+  let bottom = req.query.bottom;
+  if (!bottom)
+    return res.json({
+      error: true,
+      message:
+        "missing text query, try reading the docs: https://api.tovade.xyz/docs",
+    });
+  let bg = await loadImage(`${__dirname}/../assets/img/dym.png`);
+  const font = registerFont(`${__dirname}/../assets/fonts/ArialBI.ttf`, {
+    family: "ArialBI",
+  });
+  const canvas = createCanvas(1302, 316);
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(bg, 0, 0, 1302, 316);
+  ctx.font = "35px Arial";
+  ctx.fillText(top, 41, 76);
+  ctx.font = "35px ArialBI";
+  ctx.fillText(bottom, 295, 280);
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(canvas.toBuffer());
+});
+/**
+ * @swagger
+ * /v1/canvas/fail:
+ *   get:
+ *     description: what a fail
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: image
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+route.get("/fail", async (req, res) => {
+  let imgUrl = req.query.image;
+  if (!imgUrl)
+    return res.json({
+      error: true,
+      message: "missing image query",
+    });
+  let img;
+  try {
+    img = await jimp.read(imgUrl);
+    img.resize(620, 410)
+  } catch (err) {
+    return res.json({
+      error: true,
+      message: "Failed to load this image",
+    });
+  }
+  const bonk = await jimp.read(`${__dirname}/../assets/img/fail.png`);
+  bonk.composite(img, 70, 48 )
+  res.set({ "Content-Type": "image/png" });
+  res.status(200).send(await bonk.getBufferAsync("image/png"));
+});
 module.exports = {
   endpoint: "/canvas",
   router: route,

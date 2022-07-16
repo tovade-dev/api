@@ -41,7 +41,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-app.use(express.static("public"));
+app.use(express.static("src/assets/img"));
 app.get("/", (req, res) => {
   res.redirect("/docs");
 });
