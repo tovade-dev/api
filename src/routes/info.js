@@ -107,7 +107,43 @@ route.get("/reddit", async (req, res) => {
   const data = await fetchSub(req.query.sub);
   return res.json(data);
 });
+/**
+ * @swagger
+ * /v1/info/imagesearch:
+ *   get:
+ *     description: search in google by image
+ *     tags: [info]
+ *     parameters:
+ *       - name: search
+ *         description: your query.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/imagesearch', async (req, res) => {
+const gis = require('g-i-s');
+ if (!req.query.search) return res.json({error: "text query missing"})
 
+gis(req.query.search, sendResults);
+function sendResults(error, results) {
+  if (error) {
+
+    res.json({ 
+      error: 'An error occured'
+     })
+  }
+  else {
+
+    res.send(JSON.stringify(results, null, ' '))
+  }
+}
+
+})
 module.exports = {
   endpoint: "/info",
   router: route,
