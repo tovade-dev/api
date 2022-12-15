@@ -68,8 +68,7 @@ route.get("/covid", async (req, res) => {
       activecases: activeCases,
       closedcases: closedCasesa,
       mildcases: mildCases,
-      criticalases: criticalCases,
-      pattern: '/utility/covid?country=[country]'
+      criticalases: criticalCases
     })
   }
 });
