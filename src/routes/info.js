@@ -8,18 +8,69 @@ const fetch = require("node-fetch");
  *   get:
  *     description: Covid statistics
  *     tags: [info]
+ *     parameters:
+ *       - name: country
+ *         description: country name.
+ *         in: query
+ *         required: false
+ *         type: string
  *     responses:
  *       200:
  *         description: Success
+ *       300:
+ *         description: Invalid Country
  *       400:
  *         description: Error
  */
 route.get("/covid", async (req, res) => {
-  const rese = await fetch("https://disease.sh/v3/covid-19/all").then((reses) =>
-    reses.json()
-  );
+  const worldometer = require('worldometer-coronavirus-info')
+  try {
+    const country = req.query.country;
 
-  return res.json(rese);
+    const corona = await worldometer.trackCountry(country)
+    let totalCases = corona.cases.total 
+    if (totalCases == null) return res.status(300).send({
+      error: 'invalid country'
+    })
+    const recovered = corona.cases.recovered
+    const deaths = corona.cases.deaths
+    const dischargePercent = corona.closedCases.percentage.discharge
+    const deathPercent = corona.closedCases.percentage.death
+    const closedCases = corona.closedCases.total
+    const flagImg = corona.country.flagImg 
+    const countryName = corona.country.name
+    res.status(200).send({
+      country: countryName,
+      totalcases: totalCases,
+      recovered: recovered,
+      deaths: deaths,
+      dischargePercent: dischargePercent,
+      deathPercent: deathPercent,
+      closedCases: closedCases,
+      flagimg: flagImg
+
+    })
+
+  } catch (e) {
+    const coronaa = await worldometer.trackAll()//returns object
+    const totalCasesa = coronaa.totalCases //returns total cases
+    const totalDeaths = coronaa.totalDeaths
+    const totalRecovered = coronaa.totalRecovered
+    const activeCases = coronaa.activeCases
+    const closedCasesa = coronaa.closedCases
+    const mildCases = coronaa.condition.mild
+    const criticalCases = coronaa.condition.critical
+    res.status(200).send({
+      country: "World",
+      cases: totalCasesa,
+      deaths: totalDeaths,
+      recovered: totalRecovered,
+      activecases: activeCases,
+      closedcases: closedCasesa,
+      mildcases: mildCases,
+      criticalases: criticalCases
+    })
+  }
 });
 
 /**
@@ -107,7 +158,43 @@ route.get("/reddit", async (req, res) => {
   const data = await fetchSub(req.query.sub);
   return res.json(data);
 });
+/**
+ * @swagger
+ * /v1/info/imagesearch:
+ *   get:
+ *     description: search in google by image
+ *     tags: [info]
+ *     parameters:
+ *       - name: search
+ *         description: your query.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/imagesearch', async (req, res) => {
+const gis = require('g-i-s');
+ if (!req.query.search) return res.json({error: "text query missing"})
 
+gis(req.query.search, sendResults);
+function sendResults(error, results) {
+  if (error) {
+
+    res.json({ 
+      error: 'An error occured'
+     })
+  }
+  else {
+
+    res.send(JSON.stringify(results, null, ' '))
+  }
+}
+
+})
 module.exports = {
   endpoint: "/info",
   router: route,

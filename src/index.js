@@ -24,7 +24,7 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: "Tovade's api",
-      description: "An api made by tovade.",
+      description: "An api made by tovade and team",
     },
     servers: config.servers,
   },
