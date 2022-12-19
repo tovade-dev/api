@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const route = Router();
-const fetch = require("node-fetch");
+const worldometer = require('worldometer-coronavirus-info')
+const gis = require('g-i-s');
 
 /**
  * @swagger
@@ -23,7 +24,6 @@ const fetch = require("node-fetch");
  *         description: Error
  */
 route.get("/covid", async (req, res) => {
-  const worldometer = require('worldometer-coronavirus-info')
   try {
     const country = req.query.country;
 
@@ -176,8 +176,7 @@ route.get("/reddit", async (req, res) => {
  *       400:
  *         description: Error
  */
-router.get('/imagesearch', async (req, res) => {
-const gis = require('g-i-s');
+route.get('/imagesearch', async (req, res) => {
  if (!req.query.search) return res.json({error: "text query missing"})
 
 gis(req.query.search, sendResults);

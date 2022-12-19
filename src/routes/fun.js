@@ -177,7 +177,7 @@ route.get("/quote", (req, res) => {
 });
 /**
  * @swagger
- * /v1/fun//mine-sweeper:
+ * /v1/fun/mine-sweeper:
  *   get:
  *     description: Make a mine-sweeper board.
  *     tags: [fun]
@@ -187,7 +187,7 @@ route.get("/quote", (req, res) => {
  *       400:
  *         description: Error
  */
-router.get('/mine-sweeper', async (req, res) => {
+route.get('/mine-sweeper', async (req, res) => {
   let size1 = req.query.size
   let bomb = req.query.bombs
 

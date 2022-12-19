@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.3.0",
     "fs": "0.0.1-security",
+    "g-i-s": "^2.1.6",
     "glob": "^7.1.7",
     "jimp": "^0.16.1",
     "moment": "^2.29.1",
@@ -26,7 +27,8 @@
     "node-fetch": "^2.6.1",
     "path": "^0.12.7",
     "swagger-jsdoc": "^6.1.0",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "worldometer-coronavirus-info": "^3.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
